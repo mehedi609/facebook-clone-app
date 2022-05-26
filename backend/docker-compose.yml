@@ -1,0 +1,17 @@
+version: '3.1'
+
+volumes:
+  postgres_data:
+
+services:
+  postgres_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: facebookDB
+      POSTGRES_USER: mehedi
+      POSTGRES_PASSWORD: mehedi
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
