@@ -1,7 +1,6 @@
 import { Application, json, urlencoded, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import morgan from 'morgan';
 
 import { errorMiddleware } from './middlewares';
