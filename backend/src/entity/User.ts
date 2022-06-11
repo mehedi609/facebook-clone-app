@@ -8,18 +8,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsEmail, IsEmpty, IsNotEmpty, validate } from 'class-validator';
+import { IsEmail, IsNotEmpty, validate } from 'class-validator';
 import bcrypt from 'bcryptjs';
 import CustomError from '../erros/customError';
 import validationErrorMessages from '../utils/modifyValidationError';
 import { HttpCodes } from '../utils/http-codes';
 import { UserDetails } from './UserDetails';
-import { Follower } from './Follower';
-import { Following } from './Following';
-import { Friend } from './Friend';
-import { Request } from './Request';
-import { SearchUser } from './SearchUser';
-import { SavedPost } from './SavedPost';
+import { Follower, Following, Friend, Post, Request, SearchUser } from '../entity';
 
 export enum Gender {
   MALE = 'male',
@@ -124,8 +119,8 @@ export class User {
   @OneToMany(() => SearchUser, searchUser => searchUser.user)
   searchUsers: SearchUser[];
 
-  @OneToMany(() => SavedPost, savedPost => savedPost.user)
-  posts: SavedPost[];
+  @OneToMany(() => Post, post => post.user)
+  posts: Post[];
 
   @BeforeInsert()
   async validateBeforeInsert() {

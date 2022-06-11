@@ -1,15 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import { autoInjectable } from 'tsyringe';
-import asyncHandler from 'express-async-handler';
-import UserService from '../services/user.service';
-import { sendOKResponse } from '../utils/send-ok-response';
-import CustomError from '../erros/customError';
-import { HttpCodes } from '../utils/http-codes';
-import { createToken, verifyToken } from '../utils';
-import { config } from '../config';
-import { sendVerificationEmail } from '../utils/mailer';
-import { User } from '../entity/User';
 import expressAsyncHandler from 'express-async-handler';
+import { UserService } from '../services';
+import {
+  sendOKResponse,
+  HttpCodes,
+  createToken,
+  verifyToken,
+  sendVerificationEmail,
+} from '../utils';
+import CustomError from '../erros/customError';
+import { config } from '../config';
 
 @autoInjectable()
 export class UserController {
@@ -20,11 +21,7 @@ export class UserController {
     return res.json('hello world');
   };
 
-  // async one(request: Request, response: Response, next: NextFunction) {
-  //   return this.userRepository.findOneByOrFail({ id: +request.params.id });
-  // }
-
-  public register = asyncHandler(
+  public register = expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       if (await this.userService.findUserByEmail(req.body.email)) {
         return next(new CustomError('Email already been taken', HttpCodes.BAD_REQUEST));
@@ -57,7 +54,6 @@ export class UserController {
   public activateAccount = expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const decoded = verifyToken(req.body.token);
-      console.log(decoded);
 
       const user = await this.userService.findUserById(decoded.id);
 

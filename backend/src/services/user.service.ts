@@ -1,11 +1,6 @@
-import { validate } from 'class-validator';
-import { UserRepository } from '../repositories/user.repository';
-import CustomError from '../erros/customError';
-import { HttpCodes } from '../utils/http-codes';
-import validationErrorMessages from '../utils/modifyValidationError';
-import { User } from '../entity/User';
+import { UserRepository } from '../repositories';
 
-export default class UserService {
+export class UserService {
   private userRepository = UserRepository;
 
   public findAll = async () => {

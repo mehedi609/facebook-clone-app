@@ -1,12 +1,11 @@
-import { Application, json, NextFunction, Request, Response, urlencoded } from 'express';
+import { Application, json, urlencoded } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import morgan from 'morgan';
-import helmet from 'helmet';
-import { HttpCodes } from './utils/http-codes';
-import { errorMiddleware } from './middlewares/error.middleware';
-import CustomError from './erros/customError';
-import userRoutes from './routes/user.routes';
+
+import { errorMiddleware } from './middlewares';
+import { userRoutes } from './routes';
 
 export class InitializeApp {
   private readonly app: Application;
