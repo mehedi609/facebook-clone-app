@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { autoInjectable } from 'tsyringe';
-import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
+import expressAsyncHandler from 'express-async-handler';
+import { autoInjectable } from 'tsyringe';
 import { UserService } from '../services';
 import {
   sendOKResponse,
