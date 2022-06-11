@@ -1,17 +1,33 @@
 import { Request, Response, NextFunction } from 'express';
-import { HttpCodes } from '@/utils/http-codes';
-import { BaseError } from '@/erros/BaseError';
+import { QueryFailedError } from 'typeorm';
+import CustomError from '../erros/customError';
+import { HttpCodes } from '../utils/http-codes';
 
 export const errorMiddleware = (
-  err: BaseError,
-  request: Request,
-  response: Response,
+  err: CustomError | QueryFailedError | TypeError,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ): void => {
-  response.status(err.httpCode || HttpCodes.INTERNAL_SERVER_ERROR).json({
-    success: false,
-    errors: typeof err.message === 'string' ? [{ message: err.message }] : err.message,
-  });
+  let customError;
+  console.log(err);
 
-  return next(err);
+  if (err instanceof CustomError) {
+    customError = err;
+    console.log('CustomError');
+    console.log(customError);
+  } else if (err instanceof QueryFailedError) {
+    if (err.driverError.code === '23502') {
+      customError = new CustomError(
+        `null value in column '${err.driverError.column}' of relation '${err.driverError.table}' violates not-null constraint`,
+        HttpCodes.BAD_REQUEST,
+      );
+    } else {
+      customError = new CustomError(err);
+    }
+  } else {
+    customError = new CustomError(err);
+  }
+
+  res.status(customError.status).send(customError);
 };

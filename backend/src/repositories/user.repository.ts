@@ -1,4 +1,12 @@
-import { User } from '@/entity/User';
-import { AppDataSource } from '@/data-source';
+import { User } from '../entity/User';
+import { AppDataSource } from '../data-source';
 
-export const userRepository = AppDataSource.getRepository(User);
+export const UserRepository = AppDataSource.getRepository(User).extend({
+  findUserByEmail(email: string) {
+    return this.findOneBy({ email });
+  },
+
+  findUserByUsername(username: string) {
+    return this.findOneBy({ username });
+  },
+});

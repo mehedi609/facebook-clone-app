@@ -2,9 +2,9 @@
   "compilerOptions": {
     "lib": ["es5", "es6"],
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
+//    "paths": {
+//      "@/*": ["src/*"]
+//    },
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "target": "es5",
     "module": "commonjs",

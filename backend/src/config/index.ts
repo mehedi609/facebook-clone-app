@@ -6,9 +6,7 @@ import 'dotenv/config';
 const getEnvironmentVariable = (environmentVariable: string): string => {
   const unvalidatedEnvironmentVariable = process.env[environmentVariable];
   if (!unvalidatedEnvironmentVariable) {
-    throw new Error(
-      `Couldn't find environment variable: ${environmentVariable}`,
-    );
+    throw new Error(`Couldn't find environment variable: ${environmentVariable}`);
   } else {
     return unvalidatedEnvironmentVariable;
   }
@@ -35,5 +33,11 @@ export const config = {
     username: getEnvironmentVariable('DB_USER'),
     password: getEnvironmentVariable('DB_PASSWORD'),
     database: getEnvironmentVariable('DB_NAME'),
+  },
+  oAuth: {
+    baseUrl: getEnvironmentVariable('BASE_URL'),
+    senderEmail: getEnvironmentVariable('SENDER_EMAIL'),
+    oAuthClientId: getEnvironmentVariable('OAUTH_CLIENT_ID'),
+    oAuthClientSecret: getEnvironmentVariable('OAUTH_CLIENT_SECRET'),
   },
 };

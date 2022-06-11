@@ -13,7 +13,7 @@ export const AppDataSource = new DataSource({
   username,
   password,
   database,
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: [`${__dirname}/entity/**/*{.ts,.js}`],
   migrations: [`${__dirname}/migration/**/*{.ts,.js}`],

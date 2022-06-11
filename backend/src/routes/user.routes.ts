@@ -1,9 +1,12 @@
 import { Request, Response, Router } from 'express';
+import { container } from 'tsyringe';
+import UserController from '../controller/user.controller';
 
-const userRoutes = Router();
+const router = Router();
 
-userRoutes.get('/', (req: Request, res: Response) => {
-  res.json('User get route');
-});
+const userController = container.resolve(UserController);
 
-export { userRoutes };
+router.get('/', userController.all);
+router.post('/register', userController.register);
+
+export default router;

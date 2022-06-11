@@ -1,12 +1,14 @@
-import moduleAlias from 'module-alias';
-moduleAlias.addAliases({ '@': __dirname });
+// import moduleAlias from 'module-alias';
+// import 'module-alias/register';
+// moduleAlias.addAliases({ '@': __dirname });
+// require('module-alias/register');
 
 import express, { Application } from 'express';
-import { AppDataSource } from '@/data-source';
-import { config } from '@/config';
-import { InitializeApp } from '@/initializeApp';
+import { AppDataSource } from './data-source';
+import { config } from './config';
+import { InitializeApp } from './initializeApp';
 
-/*AppDataSource.initialize()
+/* AppDataSource.initialize()
   .then(async () => {})
   .catch(error => console.log(error));
 
@@ -22,7 +24,7 @@ const PORT = config.app.port;
 
 app.listen(PORT, () => {
   console.log(`Express server has started on port ${PORT}. Open http://localhost:8000`);
-});*/
+}); */
 
 class Server {
   public app: Application;

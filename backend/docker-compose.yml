@@ -1,7 +1,7 @@
 version: '3.1'
 
 volumes:
-  postgres_data:
+  postgres_data_facebookDB:
 
 services:
   postgres_db:
@@ -12,6 +12,6 @@ services:
       POSTGRES_USER: mehedi
       POSTGRES_PASSWORD: mehedi
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_facebookDB:/var/lib/postgresql/data
     ports:
       - '5432:5432'
