@@ -4,33 +4,25 @@ import expressAsyncHandler from 'express-async-handler';
 import { UserService } from '../services';
 import {
   sendOKResponse,
-  HttpCodes,
   createToken,
   verifyToken,
   sendVerificationEmail,
 } from '../utils';
-import CustomError from '../erros/customError';
 import { config } from '../config';
+import { BadRequestError } from '../erros';
 
 @autoInjectable()
 export class UserController {
   constructor(private userService?: UserService) {}
 
-  public all = async (_req: Request, res: Response, _next: NextFunction) => {
-    // const users = await this.userService.findAll();
-    return res.json('hello world');
-  };
-
   public register = expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       if (await this.userService.findUserByEmail(req.body.email)) {
-        return next(new CustomError('Email already been taken', HttpCodes.BAD_REQUEST));
+        return next(new BadRequestError('Email already been taken'));
       }
 
       if (await this.userService.findUserByUsername(req.body.username)) {
-        return next(
-          new CustomError('Username already been taken', HttpCodes.BAD_REQUEST),
-        );
+        return next(new BadRequestError('Username already been taken'));
       }
 
       const user = await this.userService.register(req.body);
@@ -59,10 +51,7 @@ export class UserController {
 
       if (user.verified) {
         return next(
-          new CustomError(
-            `This email "${user.email}" is already been activated`,
-            HttpCodes.BAD_REQUEST,
-          ),
+          new BadRequestError(`This email "${user.email}" is already been activated`),
         );
       }
 

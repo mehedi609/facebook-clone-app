@@ -10,11 +10,10 @@ import {
 } from 'typeorm';
 import { IsEmail, IsNotEmpty, validate } from 'class-validator';
 import bcrypt from 'bcryptjs';
-import CustomError from '../erros/customError';
-import validationErrorMessages from '../utils/modifyValidationError';
-import { HttpCodes } from '../utils/http-codes';
+import { validationErrorMessages } from '../utils/modifyValidationError';
 import { UserDetails } from './UserDetails';
 import { Follower, Following, Friend, Post, Request, SearchUser } from '../entity';
+import { RequestValidationError } from '../erros';
 
 export enum Gender {
   MALE = 'male',
@@ -126,7 +125,7 @@ export class User {
   async validateBeforeInsert() {
     const errors = await validate(this, { validationError: { target: false } });
     if (errors.length > 0) {
-      throw new CustomError(validationErrorMessages(errors), HttpCodes.BAD_REQUEST);
+      throw new RequestValidationError(validationErrorMessages(errors));
     }
   }
 
