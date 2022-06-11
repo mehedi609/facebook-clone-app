@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { autoInjectable } from 'tsyringe';
 import expressAsyncHandler from 'express-async-handler';
+import bcrypt from 'bcryptjs';
 import { UserService } from '../services';
 import {
   sendOKResponse,
@@ -58,6 +59,41 @@ export class UserController {
       await this.userService.updateVerifiedStatus(user.id, true);
 
       sendOKResponse(res, { message: 'Account has benn activated successfully' });
+    },
+  );
+
+  public login = expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { email, password } = req.body;
+
+      const user = await this.userService.findUserByEmail(email);
+
+      if (!user) {
+        return next(new BadRequestError(`Invalid username or password`));
+      }
+
+      if (!user.verified) {
+        return next(
+          new BadRequestError(
+            `User is not verified! Please activate your account through email`,
+          ),
+        );
+      }
+
+      const verified: boolean = await bcrypt.compare(password, user.password);
+
+      if (!verified) {
+        return next(new BadRequestError(`Invalid username or password`));
+      }
+
+      const token = createToken({ id: user.id }, '30d');
+
+      sendOKResponse(res, {
+        ...user,
+        password: undefined,
+        token,
+        msg: 'Login successful',
+      });
     },
   );
 }

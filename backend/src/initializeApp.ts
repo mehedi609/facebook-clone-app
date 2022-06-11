@@ -1,4 +1,4 @@
-import { Application, json, urlencoded } from 'express';
+import { Application, json, urlencoded, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -6,6 +6,7 @@ import morgan from 'morgan';
 
 import { errorMiddleware } from './middlewares';
 import { userRoutes } from './routes';
+import { NotFoundError } from './erros';
 
 export class InitializeApp {
   private readonly app: Application;
@@ -43,10 +44,10 @@ export class InitializeApp {
   }
 
   private initializeErrorHandling(): void {
-    // this.app.use((_req: Request, _res: Response, next: NextFunction): void => {
-    //   const err = new CustomError('Route not found', HttpCodes.NOT_FOUND);
-    //   next(err);
-    // });
+    this.app.use((_req: Request, _res: Response, next: NextFunction): void => {
+      const err = new NotFoundError('Route not found');
+      next(err);
+    });
 
     this.app.use(errorMiddleware);
   }
