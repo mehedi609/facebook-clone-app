@@ -42,6 +42,7 @@ class Server {
 
       // logger.info(`Initializing database...`);
       await AppDataSource.initialize();
+      console.log('Database Connection established..');
 
       console.info(`Configuring routes...`);
       await new InitializeApp({ app: this.app });

@@ -56,7 +56,7 @@ export class User {
   })
   email: string;
 
-  @Column()
+  @Column({ select: false })
   @IsNotEmpty({
     message: '$property is required',
   })

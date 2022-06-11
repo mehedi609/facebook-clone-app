@@ -8,17 +8,47 @@ import { User } from '../entity/User';
 export default class UserService {
   private userRepository = UserRepository;
 
-  findAll = async () => {
+  public findAll = async () => {
     return UserRepository.find();
   };
 
-  register = async userData => {
-    const user = this.userRepository.create(userData);
-    return UserRepository.save(user);
+  public register = async userData => {
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      gender,
+      bYear,
+      bMonth,
+      bDay,
+      picture,
+    } = userData;
+    const user = this.userRepository.create({
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      gender,
+      bYear,
+      bMonth,
+      bDay,
+      picture,
+    });
+    return this.userRepository.save(user);
   };
 
-  findUserByEmail = async (email: string) => this.userRepository.findUserByEmail(email);
+  public findUserByEmail = async (email: string) =>
+    this.userRepository.findUserByEmail(email);
 
-  findUserByUsername = async (username: string) =>
+  public findUserByUsername = async (username: string) =>
     this.userRepository.findUserByUsername(username);
+
+  public findUserById = async (id: number) => this.userRepository.findOneBy({ id });
+
+  public updateVerifiedStatus = async (id: number, verified: boolean) => {
+    return this.userRepository.update(id, { verified });
+  };
 }

@@ -40,4 +40,12 @@ export const config = {
     oAuthClientId: getEnvironmentVariable('OAUTH_CLIENT_ID'),
     oAuthClientSecret: getEnvironmentVariable('OAUTH_CLIENT_SECRET'),
   },
+  mailer: {
+    baseUrl: getEnvironmentVariable('BASE_URL'),
+    EMAIL: getEnvironmentVariable('MAILER_EMAIL'),
+    host: getEnvironmentVariable('MAILER_HOST'),
+    port: getEnvironmentVariable('MAILER_PORT'),
+    user: getEnvironmentVariable('MAILER_USER'),
+    pass: getEnvironmentVariable('MAILER_PASSWORD'),
+  },
 };

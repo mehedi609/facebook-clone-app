@@ -18,6 +18,8 @@
     "no-shadow": "off",
     "no-unused-vars": "warn",
     "class-methods-use-this": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-useless-constructor": "off",
+    "no-empty-function": "off"
   }
 }

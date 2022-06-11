@@ -2,13 +2,10 @@ import { Response } from 'express';
 import { HttpCodes } from './http-codes';
 
 export const sendOKResponse = (response: Response, data) => {
-  const key = Object.keys(data)[0];
-  const value = Object.values(data)[0];
-
   let result = 0;
-  if (Array.isArray(value)) {
-    result = value.length;
-  } else if (typeof value === 'object') {
+  if (Array.isArray(data)) {
+    result = data.length;
+  } else if (typeof data === 'object') {
     result = 1;
   }
 
@@ -16,6 +13,6 @@ export const sendOKResponse = (response: Response, data) => {
     success: true,
     status: HttpCodes.OK,
     result,
-    [key]: value,
+    data,
   });
 };
