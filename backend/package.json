@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon",
+    "lint-fix": "eslint --fix --ignore-path .gitignore --ext .ts src/",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "crt:entity": "cross-var npx typeorm entity:create src/entity/$npm_config_name",
     "run:migration": "npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts",

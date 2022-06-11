@@ -1,10 +1,10 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class createUserAndUserDetails1653893804422 implements MigrationInterface {
-    name = 'createUserAndUserDetails1653893804422'
+  name = 'createUserAndUserDetails1653893804422';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TYPE "public"."user_details_relationship_enum" AS ENUM(
                 'Single',
                 'In a relationship',
@@ -12,7 +12,7 @@ export class createUserAndUserDetails1653893804422 implements MigrationInterface
                 'Divorced'
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE TABLE "user_details" (
                 "id" SERIAL NOT NULL,
                 "bio" character varying,
@@ -28,10 +28,10 @@ export class createUserAndUserDetails1653893804422 implements MigrationInterface
                 CONSTRAINT "PK_fb08394d3f499b9e441cab9ca51" PRIMARY KEY ("id")
             )
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE TYPE "public"."users_gender_enum" AS ENUM('male', 'female')
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE TABLE "users" (
                 "id" SERIAL NOT NULL,
                 "first_name" character varying NOT NULL,
@@ -51,21 +51,20 @@ export class createUserAndUserDetails1653893804422 implements MigrationInterface
                 CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id")
             )
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             DROP TABLE "users"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TYPE "public"."users_gender_enum"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "user_details"
         `);
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TYPE "public"."user_details_relationship_enum"
         `);
-    }
-
+  }
 }

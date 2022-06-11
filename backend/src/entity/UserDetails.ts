@@ -14,31 +14,31 @@ export class UserDetails {
   id: number;
 
   @Column({ nullable: true })
-  bio: String;
+  bio: string;
 
   @Column({ nullable: true })
-  otherName: String;
+  otherName: string;
 
   @Column({ nullable: true })
-  job: String;
+  job: string;
 
   @Column({ nullable: true })
-  workplace: String;
+  workplace: string;
 
   @Column({ name: 'high_school', nullable: true })
-  highSchool: String;
+  highSchool: string;
 
   @Column({ nullable: true })
-  college: String;
+  college: string;
 
   @Column({ nullable: true })
-  currentCity: String;
+  currentCity: string;
 
   @Column({ nullable: true })
-  hometown: String;
+  hometown: string;
 
   @Column({ nullable: true })
-  instagram: String;
+  instagram: string;
 
   @Column({ type: 'enum', enum: Relationship, nullable: true })
   relationship: Relationship;
