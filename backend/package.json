@@ -4,7 +4,7 @@
   "description": "Setup project with typeorm express eslint docker and postgres",
   "type": "commonjs",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/server.ts",
     "dev": "nodemon",
     "lint-fix": "eslint --fix --ignore-path .gitignore --ext .ts src/",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
